@@ -19,6 +19,39 @@ function love.load() -- Starts the game
         resizable = false,
         vsync = true
     })
+
+    -- Setting scores
+    p1Score = 0
+    p2Score = 0
+
+    --Setting paddle positions
+    p1Y = 30
+    p2Y = VIRTUAL_HEIGHT-50
+
+end
+
+function love.update(dt)
+
+    -- Adding movement to paddles
+
+    -- player 1 movement
+    if love.keyboard.isDown('w') then
+        -- add negative paddle speed to current Y scaled by deltaTime
+        p1Y = p1Y + -PADDLE_SPEED * dt
+    elseif love.keyboard.isDown('s') then
+        -- add negative paddle speed to current Y scaled by deltaTime
+        p1Y = p1Y + PADDLE_SPEED * dt
+    end
+
+    -- player 2 movement
+    if love.keyboard.isDown('up') then
+        -- add negative paddle speed to current Y scaled by deltaTime
+        p2Y = p2Y + -PADDLE_SPEED * dt
+    elseif love.keyboard.isDown('down') then
+        -- add negative paddle speed to current Y scaled by deltaTime
+        p2Y = p2Y + PADDLE_SPEED * dt
+    end
+
 end
 
 function love.keypressed(key) -- If escape is hit, quit the game
@@ -41,13 +74,18 @@ function love.draw()
         'Part 1 of Pong!', 0, 10, VIRTUAL_WIDTH, 'center'
     )
 
+    -- P1 score
+    love.graphics.printf(
+        p1Score, 0, 0, VIRTUAL_WIDTH, 'center'
+    )
+
     -- creating the objects
 
     -- first paddle - left side
-    love.graphics.rectangle('fill', 10, 30, 5, 20)
+    love.graphics.rectangle('fill', 10, p1Y, 5, 20)
 
     -- second paddle - right side
-    love.graphics.rectangle('fill', VIRTUAL_WIDTH - 10, VIRTUAL_HEIGHT - 50, 5, 20)
+    love.graphics.rectangle('fill', VIRTUAL_WIDTH - 10, p2Y, 5, 20)
 
     -- ball
     love.graphics.rectangle('fill', VIRTUAL_WIDTH/2 - 2, VIRTUAL_HEIGHT/2 - 2, 4, 4)
